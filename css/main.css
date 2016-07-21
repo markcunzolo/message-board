@@ -1,0 +1,44 @@
+.page-header .btn-success {
+  margin-right: 5px;
+}
+
+#loading {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(122,122,122,0.5);
+}
+
+#loading.visible {
+  display: flex;
+}
+
+#loading .loading-text {
+  margin: auto;
+  background-color: #fff;
+  width: 200px;
+  height: 100px;
+  text-align: center;
+}
+
+#commentsContainer .comment {
+  border-bottom: solid 1px #eee;
+  margin-bottom: 20px;
+}
+
+#commentsContainer .comment:last-child {
+  border-width: 0;
+}
+
+#commentsContainer .comment .btn-primary {
+  margin-right: 5px;
+}
+
+#commentsContainer .comment .date {
+  font-style: italic;
+  font-size: 12px;
+  margin-top: 10px;
+}
