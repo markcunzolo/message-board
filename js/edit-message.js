@@ -1,18 +1,18 @@
-function getComment() {
+function getMessage() {
   // TODO: your solution goes here
 }
 
-function editComment() {
+function editMessage() {
   // TODO: your solution goes here
   window.location.href = '/index.html';
 }
 
-var commentId = getQueryStringValue('commentId');
+var messageId = getQueryStringValue('messageId');
 
-if (commentId) {
-  commentId = parseInt(commentId, 10);
+if (messageId) {
+  messageId = parseInt(messageId, 10);
 } else {
-  var result = confirm("Sorry pal, you can't edit a comment unless it's got an id!");
+  var result = confirm("Sorry pal, you can't edit a message unless it's got an id!");
 
   // result true means they clicked OK
   if (result === true) {
@@ -21,11 +21,11 @@ if (commentId) {
     window.location.href = '/';
   }
 
-  // PSST! Hey you!
+  // PSST! Hey you! Yeah, you intrepid student!
   // We're sending them back to the index no matter what they choose.
   // In that case, I didn't have to use an if/else block.
   // But, you might want to use a confirm box somewhere else in your code
   // and I thought this might be handy. HINT HINT!
 }
 
-getComment();
+getMessage();

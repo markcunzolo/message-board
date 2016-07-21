@@ -1,17 +1,28 @@
-function getAllComments() {
+function getAllMessages() {
   toggleSpinner(true);
   // TODO: your solution goes here
+  var xhttp = new XMLHttpRequest();
+
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState === 4) {
+      toggleSpinner(false);
+      showMessages(xhttp.responseText);
+    }
+  };
+
+  xhttp.open('GET', apiEndpointBase, true);
+  xhttp.send();
 }
 
-function addComment() {
-  window.location.href = '/add-comment.html';
+function addMessage() {
+  window.location.href = '/add-message.html';
 }
 
-function editComment(commentId) {
-  window.location.href = '/edit-comment.html?commentId=' + commentId;
+function editMessage(messageId) {
+  window.location.href = '/edit-message.html?messageId=' + messageId;
 }
 
-function deleteComment(commentId) {
+function deleteMessage(messageId) {
   // TODO: your solution does here
 }
 
@@ -19,13 +30,13 @@ function toggleSpinner(isVisible) {
   document.getElementById('loading').classList[isVisible ? 'add' : 'remove']('visible');
 }
 
-function showComments(comments) {
-  if (typeof comments === 'string') {
-    comments = JSON.parse(comments);
+function showMessages(messages) {
+  if (typeof messages === 'string') {
+    messages = JSON.parse(messages);
   }
 
   // reverse sort so last updated is first!
-  comments.sort(function(a, b) {
+  messages.sort(function(a, b) {
     if (a.updatedAt > b.updatedAt) {
       return -1;
     }
@@ -37,43 +48,43 @@ function showComments(comments) {
     return 0;
   });
 
-  var commentsContainer = document.getElementById('commentsContainer');
-  // clear the existing comments
-  commentsContainer.innerHTML = '';
+  var messagesContainer = document.getElementById('messagesContainer');
+  // clear the existing messages
+  messagesContainer.innerHTML = '';
 
-  comments.forEach(function(comment) {
-    var commentDiv = document.createElement("div");
-    var commentTextDiv = document.createElement("div");
-    var commentDateDiv = document.createElement("p");
+  messages.forEach(function(message) {
+    var messageDiv = document.createElement("div");
+    var messageTextDiv = document.createElement("div");
+    var messageDateDiv = document.createElement("p");
 
-    // comment header
-    var commentHtml = '<p>' + comment.createdBy +
-      (comment.isImportant ? '&#160;<span class="label label-danger">IMPORTANT</span>' : '') + 
-      '<button class="btn btn-danger pull-right" onclick="deleteComment(' + comment.id + ')"><i class="glyphicon glyphicon-trash"></i></button>' +
-      '<button class="btn btn-primary pull-right" onclick="editComment(' + comment.id + ')"><i class="glyphicon glyphicon-pencil"></i></button>' +
+    // message header
+    var messageHtml = '<p>' + message.createdBy +
+      (message.isImportant ? '&#160;<span class="label label-danger">IMPORTANT</span>' : '') + 
+      '<button class="btn btn-danger pull-right" onclick="deleteMessage(' + message.id + ')"><i class="glyphicon glyphicon-trash"></i></button>' +
+      '<button class="btn btn-primary pull-right" onclick="editMessage(' + message.id + ')"><i class="glyphicon glyphicon-pencil"></i></button>' +
     '</p>';
 
-    // comment text
-    commentTextDiv.innerHTML = comment.commentText;
+    // message text
+    messageTextDiv.innerHTML = message.commentText;
 
-    // comment date
-    if (comment.createdAt === comment.updatedAt) {
-      commentDateDiv.innerHTML = 'Created ' + moment(comment.createdAt).fromNow();
+    // message date
+    if (message.createdAt === message.updatedAt) {
+      messageDateDiv.innerHTML = 'Created ' + moment(message.createdAt).fromNow();
     } else {
-      commentDateDiv.innerHTML = 'Last updated ' + moment(comment.updatedAt).fromNow();
+      messageDateDiv.innerHTML = 'Last updated ' + moment(message.updatedAt).fromNow();
     }
 
-    commentDateDiv.classList.add('date');
+    messageDateDiv.classList.add('date');
 
-    // update comment div
-    commentDiv.classList.add('comment');
-    commentDiv.innerHTML = commentHtml;
-    commentDiv.appendChild(commentTextDiv);
-    commentDiv.appendChild(commentDateDiv);
+    // update message div
+    messageDiv.classList.add('message');
+    messageDiv.innerHTML = messageHtml;
+    messageDiv.appendChild(messageTextDiv);
+    messageDiv.appendChild(messageDateDiv);
 
-    commentsContainer.appendChild(commentDiv);
+    messagesContainer.appendChild(messageDiv);
   });
 }
 
-// This will make sure that all comments are loaded when page is loaded!
-getAllComments();
+// This will make sure that all messages are loaded when page is loaded!
+getAllMessages();

@@ -1,4 +1,4 @@
-function addComment() {
+function addMessage() {
   // TODO: your solution goes here
   window.location.href = '/';
 }

@@ -24,20 +24,20 @@
   text-align: center;
 }
 
-#commentsContainer .comment {
+#messagesContainer .message {
   border-bottom: solid 1px #eee;
   margin-bottom: 20px;
 }
 
-#commentsContainer .comment:last-child {
+#messagesContainer .message:last-child {
   border-width: 0;
 }
 
-#commentsContainer .comment .btn-primary {
+#messagesContainer .message .btn-primary {
   margin-right: 5px;
 }
 
-#commentsContainer .comment .date {
+#messagesContainer .message .date {
   font-style: italic;
   font-size: 12px;
   margin-top: 10px;
