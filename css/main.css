@@ -42,3 +42,56 @@
   font-size: 12px;
   margin-top: 10px;
 }
+
+.importantCheckbox {
+  display: inline-block;
+}
+
+.headerLabel {
+  display: inline-block;
+  margin-left: -5px;
+  padding-left: 0;
+  font-size: .3em;
+  font-weight: 200;
+}
+
+#commentorName {
+  font-size: .3em;
+  font-weight: 200;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+.centeredTitle {
+  text-align:  center;
+}
+
+.colorRow {
+  background-color: #f2f2f2;
+  background-color: rgba(85, 85, 85, 0.1);
+}
+
+td {
+  padding: 10px 5px 10px 0;
+}
+
+.smallColumn {
+  width: 10%;
+}
+
+.mediumColumn {
+  width: 20%;
+}
+
+.wideColumn {
+  width: 60%;
+  padding-right: 20px;
+}
+
+.italicText {
+  font-style: italic;
+}
+
+

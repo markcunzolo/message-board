@@ -19,7 +19,7 @@ function getMessage() {
 function editMessage() {
   var result = confirm("Are you sure you want to change this message?");
   if (result === false) {
-    window.location.href = './edit-message.html?messageId=' + messageId;
+    window.location.href = './edit-messageTable.html?messageId=' + messageId;
   } 
   var comment = {
     comment: {
@@ -34,11 +34,11 @@ function editMessage() {
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
       alert("Your message was successfully updated.");
-      window.location.href = './index.html' + '?' + determineConditions();
+      window.location.href = './indexTable.html' + '?' + determineConditions();
     }
     else if (xhttp.readyState == 4 && xhttp.status > 200) {
       alert("Your message was not successfully updated.");
-      window.location.href = './index.html';
+      window.location.href = './indexTable.html';
     }
   };
   return false;
@@ -62,9 +62,9 @@ if (messageId) {
 
   // result true means they clicked OK
   if (result === true) {
-    window.location.href = './index.html';
+    window.location.href = './indexTable.html';
   } else {
-    window.location.href = './index.html';
+    window.location.href = './indexTable.html';
   }
 }
 

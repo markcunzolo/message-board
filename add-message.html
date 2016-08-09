@@ -1,15 +1,48 @@
 <html>
+
   <head>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/main.css">
   </head>
+
+
   <body>
+
     <section class="container">
-      <h1 class="page-header">
-        Add a message
-      </h1>
+      <h1 class="page-header">Add a message</h1>
     </section>
+
+    <section class="container">
+      <form name="addMessageForm" onsubmit="return addMessage()">
+
+        <div class="inputDiv">
+          <label for="createdBy">Your name:</label>
+          <input type="text" id="createdBy" name="createdBy" value="" placeholder="ex. John Smith">
+        </div>
+
+        <div class="inputDiv">
+          <label for="commentText">Your comment:</label>
+          <textarea id="commentText" name="commentText" placeholder="Your comment here..."></textarea>
+        </div>
+
+        <div class="inputDiv">
+          <label for="isImportant">Is your message urgent?</label>
+          <input type="checkbox" id="isImportant" name="isImportant" value="true">Yes
+        </div>
+
+        <div class="inputDiv">
+          <input type="submit" name="submit" value="Post it!">
+        </div>
+
+      </form>
+    </section>
+
+
+
     <script type="text/javascript" src="js/shared.js"></script>
     <script type="text/javascript" src="js/add-message.js"></script>
+
   </body>
+
+
 </html>

@@ -13,7 +13,7 @@ function addMessage() {
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState === 4 && xhttp.status === 200) {
       alert("Your message was submitted");
-      window.location.href = './index.html' + '?' + determineConditions();
+      window.location.href = './indexTable.html' + '?' + determineConditions();
     } else if (xhttp.readyState === 4 && xhttp.status > 200) {
       alert("Their was an error. Try again.");
     }

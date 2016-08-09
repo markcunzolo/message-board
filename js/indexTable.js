@@ -57,6 +57,8 @@ function getImportantByName(selectValue) {
 }
 
 
+
+
 /*------------------------------ Select element functions ---------------------------------*/
 
 function updateSelectDropdown() { //get commentor names from api, parse the string, and pass it into the createSelectOptions fxn
@@ -115,11 +117,13 @@ function messagesByName (selectValue) { //get all comments from the api for the 
 
 
 
+/*------------------------------ General functions ---------------------------------*/
+
 function addMessage() {
   var importantOnly = document.getElementById("importantOnly").checked;
   var commentorName = document.getElementById('commentorName').value;
   var conditions = 'name=' + commentorName + '&isImportant=' + importantOnly;
-  window.location.href = './add-message.html?' + conditions;
+  window.location.href = './add-messageTable.html?' + conditions;
 }
 
 
@@ -129,7 +133,7 @@ function editMessage(messageId) {
   var importantOnly = document.getElementById("importantOnly").checked;
   var commentorName = document.getElementById('commentorName').value;
   var conditions = '&name=' + commentorName + '&isImportant=' + importantOnly;  
-  window.location.href = './edit-message.html?messageId=' + messageId + conditions;
+  window.location.href = './edit-messageTable.html?messageId=' + messageId + conditions;
 }
 
 
@@ -146,7 +150,7 @@ function deleteMessage(messageId) {
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
       alert("Your message was successfully deleted.");
-      window.location.href = './index.html';
+      window.location.href = './indexTable.html';
     }
     else if (xhttp.readyState == 4 && xhttp.status > 200) {
       alert("Your message was not successfully deleted.");
@@ -166,11 +170,17 @@ function toggleSpinner(isVisible) {
 
 
 function pageRefresh() {
-  window.location.href = './index.html';
+  window.location.href = './indexTable.html';
 }
 
 
+
+
+/*------------------------------ Displaying the messages ---------------------------------*/
+
 function showMessages(messages) {
+
+  // parse the responseText
   if (typeof messages === 'string') {
     messages = JSON.parse(messages);
   }
@@ -180,53 +190,105 @@ function showMessages(messages) {
     if (a.updatedAt > b.updatedAt) {
       return -1;
     }
-    
     if (a.updatedAt < b.updatedAt) {
       return 1;
     }
-
     return 0;
   });
 
-  var messagesContainer = document.getElementById('messagesContainer');
-  // clear the existing messages
-  messagesContainer.innerHTML = '';
+  // Get the table body and clear the existing messages
+  var tableBody = document.getElementById('tableBody');
+  tableBody.innerHTML = '';
 
   messages.forEach(function(message) {
-    var messageDiv = document.createElement("div");
-    var messageTextDiv = document.createElement("div");
-    var messageDateDiv = document.createElement("p");
+    var newRow = tableBody.insertRow(tableBody.rows.length);
+    newRow.classList.add('createdRow');
+    var nameCell = newRow.insertCell(0);
+    var messageCell = newRow.insertCell(1);
+    var timeCell = newRow.insertCell(2);
+    var actionCell = newRow.insertCell(3);
 
-    // message header
+    // name cell contents
     var messageHtml = '<p>' + message.createdBy +
-      (message.isImportant ? '&#160;<span class="label label-danger">IMPORTANT</span>' : '') + 
-      '<button class="btn btn-danger pull-right" onclick="deleteMessage(' + message.id + ')"><i class="glyphicon glyphicon-trash"></i></button>' +
-      '<button class="btn btn-primary pull-right" onclick="editMessage(' + message.id + ')"><i class="glyphicon glyphicon-pencil"></i></button>' +
-    '</p>';
+      (message.isImportant ? '&#160;<span class="label label-danger">IMPORTANT</span>' : '') + '</p>';
+    nameCell.innerHTML = messageHtml;
+    nameCell.classList.add('mediumColumn');
 
-    // message text
-    messageTextDiv.innerHTML = message.commentText;
+    // message cell contents
+    messageCell.innerHTML = message.commentText;
+    messageCell.classList.add('wideColumn');
 
-    // message date
+    // time cell contents
     if (message.createdAt === message.updatedAt) {
-      messageDateDiv.innerHTML = 'Created ' + moment(message.createdAt).fromNow();
+      timeCell.innerHTML = 'Created ' + moment(message.createdAt).fromNow();
     } else {
-      messageDateDiv.innerHTML = 'Last updated ' + moment(message.updatedAt).fromNow();
+      timeCell.innerHTML = 'Last updated ' + moment(message.updatedAt).fromNow();
     }
+    timeCell.classList.add('date');
+    timeCell.classList.add('smallColumn');
+    timeCell.classList.add('italicText');
 
-    messageDateDiv.classList.add('date');
-
-    // update message div
-    messageDiv.classList.add('message');
-    messageDiv.innerHTML = messageHtml;
-    messageDiv.appendChild(messageTextDiv);
-    messageDiv.appendChild(messageDateDiv);
-
-    messagesContainer.appendChild(messageDiv);
+    // action cell contents
+    var actionButtons = '<button class="btn btn-danger pull-right" onclick="deleteMessage(' + message.id + ')"><i class="glyphicon glyphicon-trash"></i></button>' +
+      '<button class="btn btn-primary pull-right" onclick="editMessage(' + message.id + ')"><i class="glyphicon glyphicon-pencil"></i></button>';
+    actionCell.innerHTML = actionButtons;
+    actionCell.classList.add('smallColumn');
   });
+
+  var rowArray = document.getElementsByClassName('createdRow');
+  for (var i = 0; i < rowArray.length; i++) {
+    if (i%2 === 0) {
+      rowArray[i].classList.add('colorRow');
+    }
+  }
+
+
+  
+
+
+
+
+/*
+        messages.forEach(function(message) {
+          var messageDiv = document.createElement("div");
+          var messageTextDiv = document.createElement("div");
+          var messageDateDiv = document.createElement("p");
+
+          // message header
+          var messageHtml = '<p>' + message.createdBy +
+            (message.isImportant ? '&#160;<span class="label label-danger">IMPORTANT</span>' : '') + 
+            '<button class="btn btn-danger pull-right" onclick="deleteMessage(' + message.id + ')"><i class="glyphicon glyphicon-trash"></i></button>' +
+            '<button class="btn btn-primary pull-right" onclick="editMessage(' + message.id + ')"><i class="glyphicon glyphicon-pencil"></i></button>' +
+          '</p>';
+
+          // message text
+          messageTextDiv.innerHTML = message.commentText;
+
+          // message date
+          if (message.createdAt === message.updatedAt) {
+            messageDateDiv.innerHTML = 'Created ' + moment(message.createdAt).fromNow();
+          } else {
+            messageDateDiv.innerHTML = 'Last updated ' + moment(message.updatedAt).fromNow();
+          }
+
+          messageDateDiv.classList.add('date');
+
+          // update message div
+          messageDiv.classList.add('message');
+          messageDiv.innerHTML = messageHtml;
+          messageDiv.appendChild(messageTextDiv);
+          messageDiv.appendChild(messageDateDiv);
+
+          messagesContainer.appendChild(messageDiv);
+        });
+*/
+
 }
 
 
+
+
+/*------------------------------ Determining filter conditions ---------------------------------*/
 
 function determineConditions () {
   var queryString = window.location.search.substring(1);
@@ -259,19 +321,6 @@ function determineConditions () {
       importantMessages();      
     }
   }
-
-
-
-
-/*
-  if (importantCondition === 'true') {
-    document.getElementById('importantOnly').checked = true;
-    //document.getElementById(nameCondition).selected = true;
-    importantMessages();
-  }
-  
-
-  var nameWithSpace = singleNameArray[0] + ' ' + singleNameArray[1]; */
 }
 
 

@@ -116,10 +116,7 @@ function messagesByName (selectValue) { //get all comments from the api for the 
 
 
 function addMessage() {
-  var importantOnly = document.getElementById("importantOnly").checked;
-  var commentorName = document.getElementById('commentorName').value;
-  var conditions = 'name=' + commentorName + '&isImportant=' + importantOnly;
-  window.location.href = './add-message.html?' + conditions;
+  window.location.href = './add-message.html';
 }
 
 
@@ -263,7 +260,7 @@ function determineConditions () {
 
 
 
-/*
+
   if (importantCondition === 'true') {
     document.getElementById('importantOnly').checked = true;
     //document.getElementById(nameCondition).selected = true;
@@ -271,7 +268,7 @@ function determineConditions () {
   }
   
 
-  var nameWithSpace = singleNameArray[0] + ' ' + singleNameArray[1]; */
+  var nameWithSpace = singleNameArray[0] + ' ' + singleNameArray[1];
 }
 
 
